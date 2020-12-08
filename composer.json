@@ -1,5 +1,5 @@
 {
-    "name": "nineteen/dtime",
+    "name": "ynineteen/dtime",
     "authors": [
         {
             "name": "Nineteen",
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Nineteen\\": "src/"
+            "Ynineteen\\": "src/"
         }
     }
 }

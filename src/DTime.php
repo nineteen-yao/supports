@@ -6,7 +6,7 @@
  */
 
 
-namespace Nineteen;
+namespace Ynineteen;
 
 class DTime
 {
