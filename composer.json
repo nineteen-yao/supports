@@ -1,0 +1,19 @@
+{
+    "name": "nineteen/dtime",
+    "authors": [
+        {
+            "name": "Nineteen",
+            "email": "nineteen.yao@foxmail.com"
+        }
+    ],
+
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nineteen\\": "src/"
+        }
+    }
+}
