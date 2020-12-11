@@ -6,7 +6,7 @@
  */
 
 
-namespace Ynineteen;
+namespace Ynineteen\Supports;
 
 class DTime
 {
