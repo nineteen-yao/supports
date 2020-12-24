@@ -236,6 +236,56 @@ class DTime
     }
 
     /**
+     * 获取下一天 2020-11-11 --> 2020-11-12
+     * @param null $datetime
+     * @param string $division
+     * @return bool|string
+     */
+    public static function nextDay($datetime = null, $division = '-')
+    {
+        $time = static::getTimestamp($datetime);
+        $nextDateTime = strtotime('+1 day', $time);
+
+        return static::day($nextDateTime, $division);
+    }
+
+    /**
+     * 下一天的时间戳 2020-11-11 --> 2020-11-12时间戳1605110400
+     * @param null $datetime
+     * @return false|int
+     */
+    public static function nextDayTime($datetime = null)
+    {
+        $nextDay = static::nextDay($datetime);
+        return strtotime($nextDay);
+    }
+
+    /**
+     * 获取上一天 2020-11-11 --> 2020-11-10
+     * @param null $datetime
+     * @param string $division
+     * @return bool|string
+     */
+    public static function prevDay($datetime = null, $division = '-')
+    {
+        $time = static::getTimestamp($datetime);
+        $nextDateTime = strtotime('- day', $time);
+
+        return static::day($nextDateTime, $division);
+    }
+
+    /**
+     * 上一天的时间戳 2020-11-11 --> 2020-11-10时间戳1605110400
+     * @param null $datetime
+     * @return false|int
+     */
+    public static function prevDayTime($datetime = null)
+    {
+        $nextDay = static::prevDay($datetime);
+        return strtotime($nextDay);
+    }
+
+    /**
      * 今天的日期
      * @param mixed $division 分隔符
      * @return string demo--> 2020-11-11
@@ -305,6 +355,18 @@ class DTime
     }
 
     /**
+     * 获取指定时间的当月的最后一天最后一秒的时间戳 如：2020-12-12 --> 2020-12-31当天的时间戳1565148206
+     * @param $datetime
+     * @return false|int
+     */
+    public static function lastTimeOfMonth($datetime)
+    {
+        $lastDay = static::lastDayOfMonth($datetime);
+
+        return strtotime($lastDay) + static::DAY_SECONDS - 1;
+    }
+
+    /**
      * 判断一个时间是否一个月的第一天
      * @param string|int|null $datetime
      * @return bool
@@ -317,6 +379,53 @@ class DTime
         $date = getdate($timestamp);
 
         return $totalDaysOfMonth === $date['mday'];
+    }
+
+    /**
+     * 根据时间，获取下一个月的第一天的日期 2020-10-19 ---> 2020-11-01
+     * @param $datetime
+     * @param string $division
+     * @return bool|string
+     */
+    public static function firstDayOfNextMonth($datetime, $division = '-')
+    {
+        $timestamp = static::lastTimeOfMonth($datetime) + 1;
+
+        return static::day($timestamp, $division);
+    }
+
+    /**
+     * 根据时间，获取下一个月的第一天的日期的时间戳  2020-10-19 ---> 2020-11-01当天0点整时间戳
+     * @param $datetime
+     * @return false|int
+     */
+    public static function firstTimeOfNextMonth($datetime)
+    {
+        return static::lastTimeOfMonth($datetime) + 1;
+    }
+
+    /**
+     * 根据时间，获取一个月的最后一天的日期  2020-10-19 ---> 2020-11-30
+     * @param $datetime
+     * @param string $division
+     * @return false|string
+     */
+    public static function lastDayOfNextMonth($datetime, $division = '-')
+    {
+        $firstDay = static::firstDayOfNextMonth($datetime);
+        return static::lastDayOfMonth($firstDay, $division);
+    }
+
+    /**
+     * 根据时间，获取下一个月的最后一天的日期的时间戳
+     * @param $datetime
+     * @return false|int
+     */
+    public static function lastTimeOfNextMonth($datetime)
+    {
+        $lastDay = static::lastDayOfNextMonth($datetime);
+
+        return strtotime($lastDay) + self::DAY_SECONDS - 1;
     }
 
     /**
