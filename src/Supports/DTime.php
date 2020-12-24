@@ -405,7 +405,7 @@ class DTime
     }
 
     /**
-     * 根据时间，获取一个月的最后一天的日期  2020-10-19 ---> 2020-11-30
+     * 根据时间，获取下一个月的最后一天的日期  2020-10-19 ---> 2020-11-30
      * @param $datetime
      * @param string $division
      * @return false|string
@@ -428,6 +428,55 @@ class DTime
         return strtotime($lastDay) + self::DAY_SECONDS - 1;
     }
 
+
+    /**
+     * 根据时间，获取上一个月的第一天的日期 2020-10-19 ---> 2020-09-01
+     * @param $datetime
+     * @param string $division
+     * @return bool|string
+     */
+    public static function firstDayOfPrevMonth($datetime, $division = '-')
+    {
+        $timestamp = static::firstTimeOfMonth($datetime) - 1;
+
+        return static::firstDayOfMonth($timestamp, $division);
+    }
+
+    /**
+     * 根据时间，获取上一个月的第一天的日期的时间戳  2020-10-19 ---> 2020-09-01当天0点整时间戳
+     * @param $datetime
+     * @return false|int
+     */
+    public static function firstTimeOfPrevMonth($datetime)
+    {
+        return strtotime(static::firstDayOfPrevMonth($datetime));
+    }
+
+    /**
+     * 根据时间，获取上一个月的最后一天的日期  2020-10-19 ---> 2020-11-30
+     * @param $datetime
+     * @param string $division
+     * @return false|string
+     */
+    public static function lastDayOfPrevMonth($datetime, $division = '-')
+    {
+        $firstDay = static::firstDayOfPrevMonth($datetime);
+        return static::lastDayOfMonth($firstDay, $division);
+    }
+
+    /**
+     * 根据时间，获取上一个月的最后一天的日期的时间戳
+     * @param $datetime
+     * @return false|int
+     */
+    public static function lastTimeOfPrevMonth($datetime)
+    {
+        $lastDay = static::lastDayOfPrevMonth($datetime);
+
+        return strtotime($lastDay) + self::DAY_SECONDS - 1;
+    }
+
+
     /**
      * 获取月份，---> 2020-01
      * @param int|null|string $time
@@ -440,7 +489,6 @@ class DTime
 
         return substr($tomonth, 0, 6 + strlen($division));
     }
-
 
     /**
      * 两个日期比较大小
