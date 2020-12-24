@@ -1,4 +1,5 @@
 # document
+
 ```php
 
     DTime::offset(-1);					       //默认值：0 将当前时间往前移到上一天，方便模拟时间测试
@@ -31,6 +32,22 @@
 
     	DTime::dateCompare('2020-11-10','2020-11-12');	//比较时间大小 1 date1 > date2,0 date1 = date2 , -1 date1 < date2
     	DTime::diff('2020-11-10','2020-12-13');	 	//计算两个时间的距离 
+
+    DTime::nextDay($datetime=null, $division='-');          //下一天
+    DTime::nextDayTime($datetime=null);                     //下一天时间戳
+    
+    DTime::prevDay($datetime=null, $division='-');          //上一天
+    DTime::prevDayTime($datetime=null);                     //上一天时间戳
+
+    DTime::firstDayOfNextMonth($datetime, $division='-');   //下个月的第一天
+    DTime::firstTimeOfNextMonth($datetime);                 //下个月的第一天最小时间戳
+    DTime::lastDayOfNextMonth($datetime, $division='-');    //下个月的最后一天
+    DTime::lastTimeOfNextMonth($datetime);                  //下个月的最后一天的最后时间戳
+    
+    DTime::firstDayOfPrevMonth($datetime, $division='-');    //上个月的第一天
+    DTime::firstTimeOfPrevMonth($datetime);                 //上个月的第一天最小时间戳
+    DTime::lastDayOfPrevMonth($datetime, $division='-');    //上个月的最后一天
+    DTime::lastTimeOfPrevMonth($datetime);                  //上个月的最后一天的最后时间戳
 
 
 ```
