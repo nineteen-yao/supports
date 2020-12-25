@@ -1,21 +1,22 @@
 {
-    "name": "ynineteen/supports",
-    "authors": [
-        {
-            "name": "Nineteen",
-            "email": "nineteen.yao@foxmail.com"
-        }
-    ],
-
-    "minimum-stability": "dev",
-    "require": {
-        "php": ">=7.1",
-        "ext-json": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "Ynineteen\\": "src/"
-        }
-    },
-    "license": "MIT"
+  "name": "ynineteen/supports",
+  "authors": [
+    {
+      "name": "Nineteen",
+      "email": "nineteen.yao@foxmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-iconv": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ynineteen\\": "src/"
+    }
+  },
+  "license": "MIT"
 }
