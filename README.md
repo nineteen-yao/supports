@@ -50,5 +50,7 @@
     DTime::lastTimeOfPrevMonth($datetime);                  //上个月的最后一天的最后时间戳
 
 
+    Csv::export($rows, $fileName);                          // 将二维数组数据导出到本地
+    Csv::parse($file, $containTitle=false);                 // 将CSV文件解析为二维数组
 ```
 
