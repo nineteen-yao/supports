@@ -21,7 +21,7 @@ class Csv
         if (empty($fileName) || empty($rows)) return false;
 
         $fileName = str_replace('.csv', '', strtolower($fileName)) . '.csv';
-        header("Content-type:application/vnd.ms-excel");
+        header("Content-type:application/vnd.ms-excel; charset=gb18030");
         header("Content-Disposition:filename=" . iconv("UTF-8", "GB18030", $fileName));
         header('Cache-Control: max-age=0');
 
@@ -65,6 +65,7 @@ class Csv
         }
 
         foreach ($rows as &$row) {
+
             //将CSV每行字符串转为数组
             $row = mb_convert_encoding(trim(strip_tags($row)), 'utf-8', 'gbk');
             $row = str_replace('"', '', $row);

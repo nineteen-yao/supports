@@ -17,22 +17,9 @@ class Logger
 
         $rectivePath = $ds . 'logs' . $ds . $type . '-' . date('Ymd', time()) . '.log';
 
-        if (defined('LOGS_PATH')) {
+        $storageRoot = Common::LogRoot();
+        if (strlen($storageRoot) > 0) {
             return rtrim(LOGS_PATH, $ds) . $ds . ltrim($rectivePath, $ds);
-        }
-
-        //适配laravel
-        if (class_exists('\Illuminate\Support\Facades\App') && function_exists('storage_path')) {
-            return storage_path() . $rectivePath;
-        }
-        //适配thinkphp6以上版本
-        if (class_exists('\think\App') && function_exists('app')) {
-            return app()->getRuntimePath() . $rectivePath;
-        }
-
-        //适配yii2
-        if (class_exists('\Yii')) {
-            return \Yii::$app->getRuntimePath() . $rectivePath;
         }
 
         //其它，框架或者系统，先定义LOGS_PATH路径
