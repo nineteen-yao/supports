@@ -31,7 +31,7 @@ class Logger
      * @param $arg
      * @return bool|string
      */
-    public static function toString($arg)
+    protected static function toString($arg)
     {
         if (is_object($arg)) {
             if ($arg instanceof \Throwable) {
@@ -83,15 +83,48 @@ class Logger
     }
 
     /**
+     * 日志添加调用的追踪点
+     * @param array $traces
+     * @param array $argsList
+     * @return int
+     */
+    protected static function addTrace($traces, &$argsList)
+    {
+        if (count($traces) < 2) return 101;
+
+        $callPosition = $traces[1]['file'] . '(' . $traces[1]['line'] . ')';
+
+        if (!isset($traces[2])) {
+            return array_unshift($argsList, $callPosition);
+        }
+
+        $method = $traces[2]['class'] . '::' . $traces[2]['function'];
+        $callPosition .= '[' . $method . ']';
+
+        if (isset($argsList[0]) && $method === $argsList[0]) {
+            $argsList[0] = $callPosition;
+            return 102;
+        }
+
+        array_unshift($argsList, $callPosition);
+
+        return 103;
+    }
+
+    /**
      * 解析数据题
      * @param array $argsList
      * @return false|string
      */
-    public static function parse($argsList = [])
+    protected static function parse($argsList = [])
     {
         if (empty($argsList)) return false;
 
         $content = '[' . date('Y-m-d H:i:s', time()) . ']';
+
+        //追踪
+        static::addTrace(debug_backtrace(), $argsList);
+
         if (count($argsList) === 1) {
             $content .= self::toString($argsList[0]) . PHP_EOL;
         } else {

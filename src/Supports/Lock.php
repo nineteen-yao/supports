@@ -131,7 +131,7 @@ class Lock
         } else {
             $contents = file_get_contents($path);
         }
-        
+
         $data = json_decode($contents, true);
         if (!$data) return false;
 
