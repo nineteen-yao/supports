@@ -19,7 +19,7 @@ class Logger
 
         $storageRoot = Common::LogRoot();
         if (strlen($storageRoot) > 0) {
-            return rtrim(LOGS_PATH, $ds) . $ds . ltrim($rectivePath, $ds);
+            return rtrim($storageRoot, $ds) . $ds . ltrim($rectivePath, $ds);
         }
 
         //其它，框架或者系统，先定义LOGS_PATH路径
