@@ -21,8 +21,9 @@ class CnStr
      */
     public static function pad($input, $length, $padPosition = STR_PAD_RIGHT, $padChar = ' ')
     {
+        $ratio = 2; //一个汉字与一个英文字母宽度比，根据字体不同而不同，常规宋体一般是2:1，也有小于2的比例的
         $chineseCount = static::chineseCount($input);
-        $width = mb_strlen($input) + $chineseCount * 1.53 - $chineseCount;
+        $width = round(mb_strlen($input) + $chineseCount * $ratio - $chineseCount);
         $padnum = max(0, $length - $width);
 
         //处理补齐的字符
@@ -33,7 +34,7 @@ class CnStr
 
         //补齐字符为中文
         if (static::hasChinese($padChar)) {
-            $padnum = ceil($padnum / 1.53);
+            $padnum = ceil($padnum / $ratio);
         }
 
         $padStr = '';
@@ -50,9 +51,10 @@ class CnStr
         }
 
         $halfNum = ceil($padnum / 2);
-        $padStr = substr($padStr, 0, $halfNum);
+        $leftPadStr = mb_substr($padStr, 0, $halfNum);
+        $rightPadStr = mb_substr($padStr, 0, $padnum - $halfNum);
 
-        return $padStr . $input . $padStr;
+        return $leftPadStr . $input . $rightPadStr;
     }
 
     /**
