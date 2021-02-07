@@ -43,6 +43,30 @@ class Csv
     }
 
     /**
+     * 消除单元格中的换行符号
+     * @param string $file
+     * @return mixed
+     */
+    public static function convert($file)
+    {
+        $content = file_get_contents($file);
+        $content = mb_convert_encoding(trim(strip_tags($content)), 'utf-8', 'gbk');
+        $content = str_replace('""', "'", $content);
+
+        $r = preg_match_all('/"([^"]+)"/', $content, $M);
+        if ($r > 0) {
+            foreach ($M[1] as $value) {
+                $replace = trim(str_replace(["\n", "\r"], ['', ''], $value));
+                $content = str_replace($value, $replace, $content);
+            }
+        }
+
+        file_put_contents($file . '-copy.csv', $content);
+
+        return $file;
+    }
+
+    /**
      * CSV文件解析为二维数组
      * @param $file
      * @param false $containTitle
@@ -50,6 +74,7 @@ class Csv
      */
     public static function parse($file, $containTitle = false)
     {
+        $file = static::convert($file);
         $rows = file($file);
         if (empty($rows)) {
             return [];
@@ -67,7 +92,8 @@ class Csv
         foreach ($rows as &$row) {
 
             //将CSV每行字符串转为数组
-            $row = mb_convert_encoding(trim(strip_tags($row)), 'utf-8', 'gbk');
+            //$row = mb_convert_encoding(trim(strip_tags($row)), 'utf-8', 'gbk');
+            $row = static::encodingCast($row);
             $row = str_replace('"', '', $row);
 
             //处理每行数组的值，处理前后空格问题
@@ -77,5 +103,21 @@ class Csv
         }
 
         return $rows;
+    }
+
+    /**
+     * 字符编码转化
+     * @param $str
+     * @return array|false|string|string[]|null
+     */
+    public static function encodingCast($str)
+    {
+        $encoding = mb_detect_encoding($str, ["ASCII", "UTF-8", "GB2312", "GBK", "BIG5"]);
+        $str = trim(strip_tags($str));
+        if ($encoding !== 'UTF-8') {
+            return mb_convert_encoding($str, 'UTF-8', $encoding);
+        }
+
+        return $str;
     }
 }
