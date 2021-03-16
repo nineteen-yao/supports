@@ -518,8 +518,8 @@ class DTime
 
     /**
      * 查询两个时间之间距离
-     * 值 > 0 那么compare < base 表示base在compare后面
-     * 值 < 0 那么compare > base 表示compare还没到，base到compare还欠时间
+     * 值 > 0 那么compare < base 表示base在compare后面 如： diff('2020-11-11','2020-11-12') --> 1
+     * 值 < 0 那么compare > base 表示compare还没到，base到compare还欠时间 如： diff('2020-11-13','2020-11-12') --> -1
      *
      * @param string $compare 查询的时间
      * @param null $base 参考的时间
@@ -587,6 +587,40 @@ class DTime
         return $ret * $direction;
     }
 
+    /**
+     * 判定一个时间，是否在指定时间范围内，比如是否属于夜间
+     * 示例：查询一个时间是否处于 夜里22:00到第二天早上6:00  inRangeTime('2020-11-11 00:01','22:00-06:00');
+     * @param int|string $compare 指定的时间 支持时间戳和格式化时间
+     * @param string $rangeStr 时间范围 格式： hh:mm - hh:mm
+     * @param string $rangeSplit 时间范围分隔符
+     * @return bool
+     */
+    public static function inRangeTime($compare, $rangeStr, $rangeSplit = '-')
+    {
+        list($start, $end) = explode($rangeSplit, $rangeStr);
+        $start = trim($start);
+        $end = trim($end);
+
+        $ranges = [
+            [
+                'start' => static::getTimestamp(static::yestoday() . ' ' . $start),
+                'end' => static::getTimestamp(static::today() . ' ' . $end)
+            ],
+            [
+                'start' => static::getTimestamp(static::today() . ' ' . $start),
+                'end' => static::getTimestamp(static::nextDay() . ' ' . $end)
+            ],
+        ];
+
+        $compare = static::getTimestamp($compare);
+        foreach ($ranges as $range) {
+            if ($compare > $range['start'] && $compare < $range['end']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * 获取一个日期当月月份的天数

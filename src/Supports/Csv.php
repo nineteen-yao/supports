@@ -43,6 +43,36 @@ class Csv
     }
 
     /**
+     * 大数据导出，仅支持在laravel框架内使用
+     * @param $query
+     * @param $file
+     * @param array $head
+     */
+    public static function bigDataExport($query, $file, $head = [])
+    {
+        $fp = fopen($file, 'a');
+
+        if ($head) {
+            foreach ($head as &$val) {
+                $val = iconv('utf-8', 'GB18030', $val);
+            }
+            fputcsv($fp, $head);
+        }
+
+        foreach ($query->cursor() as $customer) {
+            $row = $customer->toArray();
+            //每个单元格都转为中文编码输出
+            foreach ($row as &$cell) {
+                $cell = iconv('utf-8', 'GB18030', $cell);
+            }
+            //一行一行的输出
+            fputcsv($fp, $row);
+        }
+        //输出结束，关闭指针
+        fclose($fp);
+    }
+
+    /**
      * 消除单元格中的换行符号
      * @param string $file
      * @return mixed
