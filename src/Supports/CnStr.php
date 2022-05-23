@@ -37,10 +37,7 @@ class CnStr
             $padnum = ceil($padnum / $ratio);
         }
 
-        $padStr = '';
-        for ($i = 0; $i < $padnum; $i++) {
-            $padStr .= $padChar;
-        }
+        $padStr = str_repeat($padChar, $padnum);
 
         if ($padPosition === STR_PAD_RIGHT) {
             return $input . $padStr;
@@ -65,6 +62,7 @@ class CnStr
     public static function chineseCount($str)
     {
         $num = 0;
+        //仅仅支持7.4以上
         foreach (mb_str_split($str) as $word) {
             if (ord($word) > 0xa0) {
                 $num++;
