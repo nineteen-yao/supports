@@ -54,7 +54,9 @@ class DTime
 
     /**
      * 返回日期使用的格式
+     *
      * @param string $division
+     *
      * @return mixed 默认格式：0000-00-00
      */
     public static function dateFormat($division = '-')
@@ -64,7 +66,9 @@ class DTime
 
     /**
      * 返回时间使用的格式
+     *
      * @param string $division
+     *
      * @return mixed 默认格式：00:00:00
      */
     public static function timeFormat($division = ':')
@@ -74,8 +78,10 @@ class DTime
 
     /**
      * 返回日期+时间使用的格式
+     *
      * @param string $dateDivision
      * @param string $timeDivision
+     *
      * @return string 默认格式：0000-00-00 00:00:00
      */
     public static function dateTimeFormat($dateDivision = '-', $timeDivision = ':')
@@ -144,7 +150,9 @@ class DTime
 
     /**
      * 获取一个时间戳
+     *
      * @param null $datetime
+     *
      * @return false|int|null
      */
     public static function getTimestamp($datetime = null)
@@ -174,7 +182,9 @@ class DTime
 
     /**
      * 每个月第一天的凌晨时间戳
+     *
      * @param $time
+     *
      * @return false|int
      */
     public static function firstTimeOfMonth($time)
@@ -186,7 +196,9 @@ class DTime
 
     /**
      * 获取一个偏移的时间戳，比如，当天为2020-10-10日，执行getOffsetTime('+1 day')后，得到 154....的值，为2020-10-11号的时间戳
+     *
      * @param string $fomartString
+     *
      * @return false|int
      */
     public static function getOffsetTime($fomartString = '+1 day')
@@ -198,8 +210,10 @@ class DTime
 
     /**
      * 获取一个偏移的日期 比如，当天为2020-10-10日，执行getOffsetTime('+1 day')后，得到2020-10-11日
+     *
      * @param string $fomartString
      * @param string $division
+     *
      * @return bool|string
      */
     public static function getOffsetDate($fomartString = '+1 day', $division = '-')
@@ -212,8 +226,10 @@ class DTime
 
     /**
      * 把一个时间日期，截取日期部分 比如：2020-11-11 12:12:12 --> 20201111，1564471319 --> 2020-05-04
-     * @param null $datetime
+     *
+     * @param null   $datetime
      * @param string $division
+     *
      * @return bool|string
      */
     public static function day($datetime = null, $division = '-')
@@ -237,8 +253,10 @@ class DTime
 
     /**
      * 获取下一天 2020-11-11 --> 2020-11-12
-     * @param null $datetime
+     *
+     * @param null   $datetime
      * @param string $division
+     *
      * @return bool|string
      */
     public static function nextDay($datetime = null, $division = '-')
@@ -251,7 +269,9 @@ class DTime
 
     /**
      * 下一天的时间戳 2020-11-11 --> 2020-11-12时间戳1605110400
+     *
      * @param null $datetime
+     *
      * @return false|int
      */
     public static function nextDayTime($datetime = null)
@@ -262,8 +282,10 @@ class DTime
 
     /**
      * 获取上一天 2020-11-11 --> 2020-11-10
-     * @param null $datetime
+     *
+     * @param null   $datetime
      * @param string $division
+     *
      * @return bool|string
      */
     public static function prevDay($datetime = null, $division = '-')
@@ -276,7 +298,9 @@ class DTime
 
     /**
      * 上一天的时间戳 2020-11-11 --> 2020-11-10时间戳1605110400
+     *
      * @param null $datetime
+     *
      * @return false|int
      */
     public static function prevDayTime($datetime = null)
@@ -287,7 +311,9 @@ class DTime
 
     /**
      * 今天的日期
+     *
      * @param mixed $division 分隔符
+     *
      * @return string demo--> 2020-11-11
      */
     public static function today($division = '-')
@@ -297,6 +323,7 @@ class DTime
 
     /**
      * @param string $division
+     *
      * @return bool|string demo --> 2020-11-12
      */
     public static function tomorrow($division = '-')
@@ -306,6 +333,7 @@ class DTime
 
     /**
      * @param string $division
+     *
      * @return bool|string demo --> 2020-11-10
      */
     public static function yestoday($division = '-')
@@ -315,8 +343,10 @@ class DTime
 
     /**
      * 获取指定时间的当月的第一天 如：1565148206 --> 2020-05-01，2020-12-12 --> 2020-12-01
+     *
      * @param string $division
-     * @param null $time
+     * @param null   $time
+     *
      * @return false|string
      */
     public static function firstDayOfMonth($time = null, $division = '-')
@@ -329,7 +359,9 @@ class DTime
 
     /**
      * 判断一个时间是否一个月的第一天
+     *
      * @param string|int|null $datetime
+     *
      * @return bool
      */
     public static function isFirstDayOfMonth($datetime = null)
@@ -342,8 +374,10 @@ class DTime
 
     /**
      * 获取指定时间的当月的最后一天 如：1565148206 --> 2020-05-31，2020-12-12 --> 2020-12-31
+     *
      * @param string $division
-     * @param null $time
+     * @param null   $time
+     *
      * @return false|string
      */
     public static function lastDayOfMonth($time = null, $division = '-')
@@ -356,7 +390,9 @@ class DTime
 
     /**
      * 获取指定时间的当月的最后一天最后一秒的时间戳 如：2020-12-12 --> 2020-12-31当天的时间戳1565148206
+     *
      * @param $datetime
+     *
      * @return false|int
      */
     public static function lastTimeOfMonth($datetime)
@@ -368,7 +404,9 @@ class DTime
 
     /**
      * 判断一个时间是否一个月的第一天
+     *
      * @param string|int|null $datetime
+     *
      * @return bool
      */
     public static function isLastDayOfMonth($datetime = null)
@@ -383,8 +421,10 @@ class DTime
 
     /**
      * 根据时间，获取下一个月的第一天的日期 2020-10-19 ---> 2020-11-01
-     * @param $datetime
+     *
+     * @param        $datetime
      * @param string $division
+     *
      * @return bool|string
      */
     public static function firstDayOfNextMonth($datetime, $division = '-')
@@ -396,7 +436,9 @@ class DTime
 
     /**
      * 根据时间，获取下一个月的第一天的日期的时间戳  2020-10-19 ---> 2020-11-01当天0点整时间戳
+     *
      * @param $datetime
+     *
      * @return false|int
      */
     public static function firstTimeOfNextMonth($datetime)
@@ -406,8 +448,10 @@ class DTime
 
     /**
      * 根据时间，获取下一个月的最后一天的日期  2020-10-19 ---> 2020-11-30
-     * @param $datetime
+     *
+     * @param        $datetime
      * @param string $division
+     *
      * @return false|string
      */
     public static function lastDayOfNextMonth($datetime, $division = '-')
@@ -418,7 +462,9 @@ class DTime
 
     /**
      * 根据时间，获取下一个月的最后一天的日期的时间戳
+     *
      * @param $datetime
+     *
      * @return false|int
      */
     public static function lastTimeOfNextMonth($datetime)
@@ -431,8 +477,10 @@ class DTime
 
     /**
      * 根据时间，获取上一个月的第一天的日期 2020-10-19 ---> 2020-09-01
-     * @param $datetime
+     *
+     * @param        $datetime
      * @param string $division
+     *
      * @return bool|string
      */
     public static function firstDayOfPrevMonth($datetime, $division = '-')
@@ -444,7 +492,9 @@ class DTime
 
     /**
      * 根据时间，获取上一个月的第一天的日期的时间戳  2020-10-19 ---> 2020-09-01当天0点整时间戳
+     *
      * @param $datetime
+     *
      * @return false|int
      */
     public static function firstTimeOfPrevMonth($datetime)
@@ -454,8 +504,10 @@ class DTime
 
     /**
      * 根据时间，获取上一个月的最后一天的日期  2020-10-19 ---> 2020-11-30
-     * @param $datetime
+     *
+     * @param        $datetime
      * @param string $division
+     *
      * @return false|string
      */
     public static function lastDayOfPrevMonth($datetime, $division = '-')
@@ -466,7 +518,9 @@ class DTime
 
     /**
      * 根据时间，获取上一个月的最后一天的日期的时间戳
+     *
      * @param $datetime
+     *
      * @return false|int
      */
     public static function lastTimeOfPrevMonth($datetime)
@@ -479,8 +533,10 @@ class DTime
 
     /**
      * 获取月份，---> 2020-01
+     *
      * @param int|null|string $time
-     * @param string $division
+     * @param string          $division
+     *
      * @return false|string
      */
     public static function month($time = null, $division = '-')
@@ -498,6 +554,7 @@ class DTime
      *
      * @param $date1
      * @param $date2
+     *
      * @return int
      */
     public static function dateCompare($date1, $date2)
@@ -522,8 +579,9 @@ class DTime
      * 值 < 0 那么compare > base 表示compare还没到，base到compare还欠时间 如： diff('2020-11-13','2020-11-12') --> -1
      *
      * @param string $compare 查询的时间
-     * @param null $base 参考的时间
-     * @param string $unit 距离单位 day(默认)天，second秒，week周，month月，year年
+     * @param null   $base    参考的时间
+     * @param string $unit    距离单位 day(默认)天，second秒，week周，month月，year年
+     *
      * @return float|int
      * @throws \Exception
      */
@@ -590,9 +648,11 @@ class DTime
     /**
      * 判定一个时间，是否在指定时间范围内，比如是否属于夜间
      * 示例：查询一个时间是否处于 夜里22:00到第二天早上6:00  inRangeTime('2020-11-11 00:01','22:00-06:00');
-     * @param int|string $compare 指定的时间 支持时间戳和格式化时间
-     * @param string $rangeStr 时间范围 格式： hh:mm - hh:mm
-     * @param string $rangeSplit 时间范围分隔符
+     *
+     * @param int|string $compare    指定的时间 支持时间戳和格式化时间
+     * @param string     $rangeStr   时间范围 格式： hh:mm - hh:mm
+     * @param string     $rangeSplit 时间范围分隔符
+     *
      * @return bool
      */
     public static function inRangeTime($compare, $rangeStr, $rangeSplit = '-')
@@ -624,7 +684,9 @@ class DTime
 
     /**
      * 获取一个日期当月月份的天数
+     *
      * @param null $datetime
+     *
      * @return mixed
      */
     public static function maxDayOfMonth($datetime = null)
