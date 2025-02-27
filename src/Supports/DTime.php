@@ -8,6 +8,8 @@
 
 namespace Ynineteen\Supports;
 
+use Exception;
+
 class DTime
 {
     const DAY_SECONDS = 86400;
@@ -227,7 +229,7 @@ class DTime
     /**
      * 把一个时间日期，截取日期部分 比如：2020-11-11 12:12:12 --> 20201111，1564471319 --> 2020-05-04
      *
-     * @param null   $datetime
+     * @param null $datetime
      * @param string $division
      *
      * @return bool|string
@@ -254,7 +256,7 @@ class DTime
     /**
      * 获取下一天 2020-11-11 --> 2020-11-12
      *
-     * @param null   $datetime
+     * @param null $datetime
      * @param string $division
      *
      * @return bool|string
@@ -283,7 +285,7 @@ class DTime
     /**
      * 获取上一天 2020-11-11 --> 2020-11-10
      *
-     * @param null   $datetime
+     * @param null $datetime
      * @param string $division
      *
      * @return bool|string
@@ -345,7 +347,7 @@ class DTime
      * 获取指定时间的当月的第一天 如：1565148206 --> 2020-05-01，2020-12-12 --> 2020-12-01
      *
      * @param string $division
-     * @param null   $time
+     * @param null $time
      *
      * @return false|string
      */
@@ -376,7 +378,7 @@ class DTime
      * 获取指定时间的当月的最后一天 如：1565148206 --> 2020-05-31，2020-12-12 --> 2020-12-31
      *
      * @param string $division
-     * @param null   $time
+     * @param null $time
      *
      * @return false|string
      */
@@ -535,7 +537,7 @@ class DTime
      * 获取月份，---> 2020-01
      *
      * @param int|null|string $time
-     * @param string          $division
+     * @param string $division
      *
      * @return false|string
      */
@@ -579,11 +581,11 @@ class DTime
      * 值 < 0 那么compare > base 表示compare还没到，base到compare还欠时间 如： diff('2020-11-13','2020-11-12') --> -1
      *
      * @param string $compare 查询的时间
-     * @param null   $base    参考的时间
-     * @param string $unit    距离单位 day(默认)天，second秒，week周，month月，year年
+     * @param null $base 参考的时间
+     * @param string $unit 距离单位 day(默认)天，second秒，week周，month月，year年
      *
      * @return float|int
-     * @throws \Exception
+     * @throws Exception
      */
     public static function diff(string $compare, $base = null, $unit = 'day')
     {
@@ -649,9 +651,9 @@ class DTime
      * 判定一个时间，是否在指定时间范围内，比如是否属于夜间
      * 示例：查询一个时间是否处于 夜里22:00到第二天早上6:00  inRangeTime('2020-11-11 00:01','22:00-06:00');
      *
-     * @param int|string $compare    指定的时间 支持时间戳和格式化时间
-     * @param string     $rangeStr   时间范围 格式： hh:mm - hh:mm
-     * @param string     $rangeSplit 时间范围分隔符
+     * @param int|string $compare 指定的时间 支持时间戳和格式化时间
+     * @param string $rangeStr 时间范围 格式： hh:mm - hh:mm
+     * @param string $rangeSplit 时间范围分隔符
      *
      * @return bool
      */
@@ -683,11 +685,63 @@ class DTime
     }
 
     /**
+     * 获取一个时间范围
+     * @param string $date 指定日期
+     * @param int $dimension 统计维度 1-日期 2-月度 3-年度
+     * @param bool $withTime 是否带回时间范围
+     * @param bool $endPlusOneDay 截止日期往后+一天
+     * @return array
+     * @throws Exception
+     */
+    public static function dateRange($date, $dimension = 1, $withTime = false, $endPlusOneDay = false)
+    {
+        $date = self::day($date);
+        if (!in_array($dimension, [1, 2, 3])) {
+            throw new Exception('Dimension only support 1,2,or3,"' . $dimension . '" was given.');
+        }
+        $start = $date;
+        $end = $date;
+
+        //月度
+        if ($dimension === 2) {
+            $start = self::firstDayOfMonth($date);
+            $end = self::lastDayOfMonth($date);
+        }
+        //年度
+        if ($dimension === 3) {
+            $year = date('Y', self::getTimestamp($date));
+            $start = $year . '-01-01';
+            $end = $year . '-12-31';
+        }
+
+        if ($withTime) {
+            $start .= ' 00:00:00';
+            $end .= ' 23:59:59';
+        } else {
+            if ($endPlusOneDay) {
+                $end = self::nextDay($end);
+            }
+        }
+
+        return [$start, $end];
+    }
+
+    public static function dateRangePlus($date, $dimension = 1)
+    {
+        return self::dateRange($date,$dimension,false,true);
+    }
+
+    public static function timeRange($date, $dimension = 1)
+    {
+        return self::dateRange($date,$dimension,true);
+    }
+
+    /**
      * 获取一个日期当月月份的天数
      *
      * @param null $datetime
      *
-     * @return mixed
+     * @return int
      */
     public static function maxDayOfMonth($datetime = null)
     {
